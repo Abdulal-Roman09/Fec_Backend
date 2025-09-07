@@ -1,0 +1,21 @@
+const EventSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  date: Date,
+  organizer: { type: mongoose.Types.ObjectId, ref: "Club" },
+  participants: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+});
+
+const AwardSchema = new mongoose.Schema({
+  userId: { type: mongoose.Types.ObjectId, ref: "User" },
+  awardName: String,
+  position: String,
+  year: Number,
+});
+
+const ClubSchema = new mongoose.Schema({
+  name: String,
+  type: String, // Sports, Cultural
+  description: String,
+  members: [{ userId: { type: mongoose.Types.ObjectId, ref: "User" }, role: String }],
+});

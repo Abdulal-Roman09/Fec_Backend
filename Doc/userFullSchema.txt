@@ -1,0 +1,65 @@
+import mongoose from "mongoose";
+
+// Sub-schema for club relations (user's role in a club)
+const ClubRelationSchema = new mongoose.Schema({
+  clubRole: {
+    type: String,
+    enum: [
+      "President",
+      "Vice President",
+      "General Secretary",
+      "Joint Secretary",
+      "Organizing Secretary",
+      "Treasurer",
+      "Member",
+      "Advisor",
+      "Coordinator",
+      "FecsaElit",
+      "Other",
+    ],
+  },
+  clubSession: { type: String },
+});
+
+// Sub-schema for club achievements
+const ClubAchievementsSchema = new mongoose.Schema({
+  awardName: { type: String },
+  position: { type: String },
+  clubName: { type: String },
+  clubType: { type: String },
+});
+
+// Main User schema
+const UserSchema = new mongoose.Schema({
+  name: { type: String }, 
+  email: { type: String, unique: true }, 
+  password: { type: String }, 
+  profileImage: { type: String },
+
+  session: { type: String },
+  year: { type: String },
+  semester: { type: String },
+
+  role: {
+    type: String,
+    enum: ["Student", "ClubOrganizer", "CR", "Admin", "SuperAdmin"],
+    default: "Student",
+  },
+
+  homeTown: { type: String }, 
+  createdAt: { type: Date, default: Date.now },
+  hallName: { type: String },
+
+  linkedin: { type: String },
+  github: { type: String }, 
+  facebook: { type: String }, 
+  phone: { type: String }, 
+
+  clubRelation: { type: [ClubRelationSchema], default: [] },
+  clubAchievements: { type: [ClubAchievementsSchema], default: [] },
+});
+
+// Create the model
+const User = mongoose.model("User", UserSchema);
+
+export default User;

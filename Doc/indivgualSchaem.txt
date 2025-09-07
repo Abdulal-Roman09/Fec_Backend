@@ -1,0 +1,100 @@
+import mongoose from "mongoose";
+
+const ClubSchema = new mongoose.Schema(
+  {
+    clubName: { type: String, required: true, unique: true },
+    clubSortName: { type: String, required: true },
+    clubMotto: { type: String },
+    clubDescription: { type: String },
+    clubLogo: { type: String },
+    clubBanner: { type: String },
+    clubCategory: {
+      type: String,
+      required: true,
+      enum: [
+        "Innovation",
+        "Technology",
+        "Arts",
+        "Religious",
+        "Community",
+        "Sports",
+        "Creative",
+        "Academic",
+        "Cultural",
+        "Professional",
+        "Education",
+      ],
+    },
+  },
+  { timestamps: true, versionKey: false }
+);
+
+export default mongoose.model("Club", ClubSchema);
+
+
+import mongoose from "mongoose";
+
+const CommitteeSchema = new mongoose.Schema(
+  {
+    clubId: { type: mongoose.Types.ObjectId, ref: "Club", required: true },
+    name: { type: String, required: true },
+    role: {
+      type: String,
+      enum: [
+        "President",
+        "Vice President",
+        "General Secretary",
+        "Joint Secretary",
+        "Treasurer",
+        "Member",
+        "Advisor",
+        "Coordinator",
+        "Other",
+      ],
+      default: "Member",
+    },
+    email: { type: String },
+    phone: { type: String },
+  },
+  { timestamps: true, versionKey: false }
+);
+
+export default mongoose.model("Committee", CommitteeSchema);
+
+
+import mongoose from "mongoose";
+
+const AchievementSchema = new mongoose.Schema(
+  {
+    clubId: { type: mongoose.Types.ObjectId, ref: "Club", required: true },
+    title: { type: String, required: true },
+    year: { type: Number },
+    description: { type: String },
+  },
+  { timestamps: true, versionKey: false }
+);
+
+export default mongoose.model("Achievement", AchievementSchema);
+
+
+import mongoose from "mongoose";
+
+const EventSchema = new mongoose.Schema(
+  {
+    clubId: { type: mongoose.Types.ObjectId, ref: "Club", required: true },
+    title: { type: String, required: true },
+    banner: { type: String },
+    description: { type: String },
+    date: { type: Date },
+    location: { type: String },
+    speaker: { type: String },
+    organizer: { type: String },
+    registerLink: { type: String },
+    registerDeadline: { type: Date },
+  },
+  { timestamps: true, versionKey: false }
+);
+
+export default mongoose.model("Event", EventSchema);
+
+
