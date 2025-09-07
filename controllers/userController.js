@@ -3,24 +3,51 @@ import User from "../models/User.js";
 // CREATE USER
 export const createUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const {
+      name,
+      email,
+      password,
+      profileImage,
+      role,
+      year,
+      semester,
+      registerNumber,
+      hallName,
+      phone,
+      linkedin,
+      github,
+      facebook,
+      session,
+      homeTown,
+    } = req.body;
 
+    // Check existing user
     const existUser = await User.findOne({ email });
     if (existUser) {
-      return res.status(400).json({ message: "Email is already exist" });
+      return res.status(400).json({ message: "Email already exists" });
     }
 
     const newUser = new User({
       name,
       email,
       password,
+      profileImage: profileImage || "/default-avatar.png",
+      role: role || "Student",
+      year,
+      semester,
+      registerNumber,
+      hallName,
+      phone,
+      linkedin,
+      github,
+      facebook,
+      session,
+      homeTown,
     });
 
     await newUser.save();
 
-    const userResponse = { ...newUser._doc };
-
-    res.status(201).json({ message: "User created", user: userResponse });
+    res.status(201).json({ message: "User created", user: newUser });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
