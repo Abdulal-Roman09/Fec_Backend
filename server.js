@@ -35,7 +35,7 @@ app.use(
 );
 
 // all routes
-app.use("/api/v1/clubs",clubRoutes);
+app.use("/api/v1",clubRoutes);
 
 // Simple test route
 app.get("/", (req, res) => {
