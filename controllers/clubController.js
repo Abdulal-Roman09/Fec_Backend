@@ -13,8 +13,8 @@ export const createClub = async (req, res) => {
 
 export const getAllclubs = async (req, res) => {
   try {
-    const clubs = await Club.find();
-    res.status(200).json({ clubs });
+    const clubs = await Club.find().sort({ createdAt: -1 });
+    res.status(200).json({ message: "Clubs fetched successfully", clubs });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
