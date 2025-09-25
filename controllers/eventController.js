@@ -31,6 +31,8 @@ export const addEvents = async (req, res) => {
 
 export const getAllevents = async (req, res) => {
   try {
+    const events = await Event.find();
+    return res.status(200).json({ message: "Get all events", data: events });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
