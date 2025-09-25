@@ -37,3 +37,19 @@ export const getAllevents = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+export const getAllEventByClubId = async (req, res) => {
+  try {
+    const clubId = req.params.id;
+    if (!clubId) {
+      return res.status(400).json({ message: "clubId is required" });
+    }
+    const event = await Event.find({ clubId });
+    return res.status(200).json({
+      message: "All committee members retrieved successfully",
+      data: event,
+    });
+  } catch (error) {
+    console.error("Error in getFullCommitteeClub:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
