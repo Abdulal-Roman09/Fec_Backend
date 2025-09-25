@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
     profileImage: { type: String, default: "/default-avatar.png" },
     role: {
       type: String,
-      enum: ["Student", "ClubOrganizer", "CR", "Admin", "SuperAdmin"],
+      enum: ["Student", "ClubMember", "CR", "Admin", "SuperAdmin"],
       default: "Student",
     },
     session: { type: String },
