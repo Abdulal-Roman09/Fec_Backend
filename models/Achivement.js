@@ -6,6 +6,8 @@ const AchievementSchema = new mongoose.Schema(
     title: { type: String, required: true },
     year: { type: Number },
     description: { type: String },
+    eventLocation: { type: String },
+    eventName: { type: String },
   },
   { timestamps: true, versionKey: false }
 );
