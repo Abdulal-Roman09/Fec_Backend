@@ -51,3 +51,25 @@ export const addCommittee = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+export const getFullCommitteeClub = async (req, res) => {
+  try {
+    const clubId = req.params.id;
+    if (!clubId) {
+      return res.status(400).json({ message: "clubId is required" });
+    }
+
+    // Find all committee members of this club
+    const committee = await Committee.find({ clubId }).populate(
+      "clubId",
+      "name logo"
+    );
+
+    return res.status(200).json({
+      message: "All committee members retrieved successfully",
+      data: committee,
+    });
+  } catch (error) {
+    console.error("Error in getFullCommitteeClub:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
