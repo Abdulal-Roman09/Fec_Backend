@@ -9,7 +9,7 @@ const EventSchema = new mongoose.Schema(
     date: { type: Date },
     location: { type: String },
     speaker: { type: String },
-    organizer: { type: String },
+    organizerClub: { type: String },
     registerLink: { type: String },
     registerDeadline: { type: Date },
   },

@@ -6,6 +6,7 @@ import cors from "cors";
 // import routes
 import clubRoutes from "./routes/clubRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import eventRoutes from "./routes/eventRoutes.js";
 import committeeRoutes from "./routes/committeeRoutes.js";
 
 dotenv.config();
@@ -39,6 +40,7 @@ app.use(
 // all routes
 app.use("/api/v1", clubRoutes);
 app.use("/api/v1", userRoutes);
+app.use("/api/v1", eventRoutes);
 app.use("/api/v1", committeeRoutes);
 
 // Simple test route
