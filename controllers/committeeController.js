@@ -73,3 +73,17 @@ export const getFullCommitteeClub = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+export const deleteCommitteeMember = async (req, res) => {
+  try {
+    const { clubId, memberId } = req.params;
+
+    const deletedMember = await Committee.findOneAndDelete({ _id: memberId, clubId });
+    if (!deletedMember) return res.status(404).json({ message: "Member not found in this club" });
+
+    res.status(200).json({ message: "Member deleted successfully", data: deletedMember });
+
+  } catch (error) {
+    console.error("Error in deleteCommitteeMember:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
