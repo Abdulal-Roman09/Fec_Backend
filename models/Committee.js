@@ -19,8 +19,15 @@ const CommitteeSchema = new mongoose.Schema(
       ],
       default: "Member",
     },
+    image: { type: String },
     email: { type: String },
     phone: { type: String },
+    // social
+    facebookLink: { type: String, required: true },
   },
   { timestamps: true, versionKey: false }
 );
+
+const Committee = mongoose.model("Committee", CommitteeSchema);
+
+export default Committee;
