@@ -53,3 +53,22 @@ export const getAllEventByClubId = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+export const deleteEvent = async (req, res) => {
+  try {
+    const { clubId, eventId } = req.params;
+
+    const deletedEvent = await Event.findOneAndDelete({
+      _id: eventId,
+      clubId,
+    });
+    if (!deletedEvent)
+      return res.status(404).json({ message: "Events not found in this club" });
+
+    res
+      .status(200)
+      .json({ message: "Event deleted successfully", data: deletedEvent });
+  } catch (error) {
+    console.error("Error in deleteCommitteeMember:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
