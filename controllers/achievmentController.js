@@ -8,7 +8,6 @@ export const createAchievement = async (req, res) => {
     if (!clubId || !title) {
       return res.status(400).json({ message: "clubId and title are required" });
     }
-
     const newAchievement = await Achievement.create({
       clubId,
       title,
@@ -23,7 +22,6 @@ export const createAchievement = async (req, res) => {
       data: newAchievement,
     });
   } catch (error) {
-    console.error("Error in createAchievement:", error);
     return res.status(500).json({ message: error.message });
   }
 };
