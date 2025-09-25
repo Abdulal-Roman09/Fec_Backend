@@ -29,7 +29,6 @@ export const addEvents = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
 export const getAllevents = async (req, res) => {
   try {
     const events = await Event.find();
@@ -73,23 +72,6 @@ export const deleteEvent = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-// export const eventDetiles = async (req, res) => {
-//   try {
-//     const { clubId, eventId } = req.params;
-//     const event = await Event.find({
-//       clubId: new mongoose.Types.ObjectId(clubId),
-//       _id: new mongoose.Types.ObjectId(eventId),
-//     });
-//     if (!event)
-//       return res.status(404).json({ message: "Event not found in this club" });
-
-//     res
-//       .status(200)
-//       .json({ message: "Event details fetched successfully", data: event });
-//   } catch (error) {
-//     return res.status(500).json({ message: error.message });
-//   }
-// };
 export const eventDetails = async (req, res) => {
   try {
     const { clubId, eventId } = req.params;
@@ -110,6 +92,30 @@ export const eventDetails = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in eventDetails:", error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+export const updateEvent = async (req, res) => {
+  try {
+    const { clubId, eventId } = req.params;
+    const updateData = req.body;
+    const updatedEvent = await Event.findOneAndUpdate(
+      {
+        _id: new mongoose.Types.ObjectId(eventId),
+        clubId: new mongoose.Types.ObjectId(clubId),
+      },
+      updateData,
+      { new: true, runValidators: true }
+    );
+    if (!updatedEvent) {
+      return res.status(404).json({ message: "Event not found in this club" });
+    }
+    res.status(200).json({
+      message: "Event updated successfully",
+      data: updatedEvent,
+    });
+  } catch (error) {
+    console.error("Error in updateEvent:", error);
     return res.status(500).json({ message: error.message });
   }
 };
