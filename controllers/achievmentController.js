@@ -13,7 +13,9 @@ export const createAchievement = async (req, res) => {
     // Check duplicate
     const exist = await Achievement.findOne({ clubId, title });
     if (exist) {
-      return res.status(400).json({ message: "This achievement already exists" });
+      return res
+        .status(400)
+        .json({ message: "This achievement already exists" });
     }
 
     const newAchievement = await Achievement.create({
@@ -65,7 +67,9 @@ export const deleteAchievement = async (req, res) => {
     });
 
     if (!achievement) {
-      return res.status(404).json({ message: "Achievement not found for this club" });
+      return res
+        .status(404)
+        .json({ message: "Achievement not found for this club" });
     }
 
     res.status(200).json({
@@ -74,5 +78,26 @@ export const deleteAchievement = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+};
+
+// Update Achievement
+export const updateAchievement = async (req, res) => {
+  try {
+    const { clubId, achievementId } = req.params;
+    const updated = await Achievement.findOneAndUpdate(
+      { _id: achievementId, clubId },
+      { $set: req.body },
+      { new: true }
+    );
+    if (!updated)
+      return res
+        .status(404)
+        .json({ message: "Achievement not found for this club" });
+    res
+      .status(200)
+      .json({ message: "Achievement updated successfully", data: updated });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

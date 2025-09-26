@@ -3,6 +3,7 @@ import {
   allAchivements,
   createAchievement,
   deleteAchievement,
+  updateAchievement,
 } from "../controllers/achievmentController.js";
 
 const router = express.Router();
