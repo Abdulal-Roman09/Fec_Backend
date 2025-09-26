@@ -8,6 +8,10 @@ export const createAchievement = async (req, res) => {
     if (!clubId || !title) {
       return res.status(400).json({ message: "clubId and title are required" });
     }
+    const eventExist = await Achievement.findOne({ clubId, title });
+    if (eventExist) {
+      return res.status(400).json({ message: "this Acivments is alrady exitst" });
+    }
     const newAchievement = await Achievement.create({
       clubId,
       title,

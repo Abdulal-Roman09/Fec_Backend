@@ -3,7 +3,7 @@ import { createAchievement } from "../controllers/achievmentController.js";
 
 const router = express.Router();
 
-router.post("/add-achievements/:clubId", createAchievement);
+router.post("/:clubId/add-achievements", createAchievement);
 
 
 export default router;
