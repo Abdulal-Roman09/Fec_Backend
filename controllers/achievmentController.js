@@ -53,3 +53,26 @@ export const allAchivements = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+// Delete Achievement
+export const deleteAchievement = async (req, res) => {
+  try {
+    const { clubId, achievementId } = req.params;
+
+    const achievement = await Achievement.findOneAndDelete({
+      _id: achievementId,
+      clubId,
+    });
+
+    if (!achievement) {
+      return res.status(404).json({ message: "Achievement not found for this club" });
+    }
+
+    res.status(200).json({
+      message: "Achievement deleted successfully",
+      data: achievement,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
