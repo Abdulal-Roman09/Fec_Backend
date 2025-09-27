@@ -1,13 +1,24 @@
 import Achievement from "../models/Achivement.js";
 
-// Create Achievement
 export const createAchievement = async (req, res) => {
   try {
     const { clubId } = req.params;
-    const { title, year, description, eventLocation, eventName } = req.body;
+    const {
+      title,
+      year,
+      date,
+      description,
+      eventLocation,
+      eventName,
+      image,
+      award,
+      result,
+    } = req.body;
 
-    if (!clubId || !title) {
-      return res.status(400).json({ message: "clubId and title are required" });
+    if (!clubId || !title || !image) {
+      return res
+        .status(400)
+        .json({ message: "clubId, title and image are required" });
     }
 
     // Check duplicate
@@ -22,9 +33,13 @@ export const createAchievement = async (req, res) => {
       clubId,
       title,
       year,
+      date,
       description,
       eventLocation,
       eventName,
+      image,
+      award,
+      result,
     });
 
     res.status(201).json({
@@ -44,7 +59,7 @@ export const allAchivements = async (req, res) => {
     const query = clubId ? { clubId } : {};
 
     const achievements = await Achievement.find(query)
-      .populate("clubId", "name description")
+      .populate("clubId")
       .sort({ updatedAt: -1 });
 
     res.status(200).json({
