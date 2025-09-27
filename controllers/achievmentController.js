@@ -70,6 +70,27 @@ export const allAchivements = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+// achivements detelies
+export const achivementsDetelies = async (req, res) => {
+  try {
+    const { clubId, achievementId } = req.params;
+
+    const achievement = await Achievement.findOne({
+      _id: achievementId,
+      clubId: clubId,
+    });
+
+    if (!achievement) {
+      return res.status(404).json({ message: "Achievement not found" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "get achievement", data: achievement });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 
 // Delete Achievement
 export const deleteAchievement = async (req, res) => {
