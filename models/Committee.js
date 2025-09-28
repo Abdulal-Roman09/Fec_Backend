@@ -7,14 +7,43 @@ const CommitteeSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: [
+        // fecsa
+        "FECSA ELITE",
+        // Steering Committee / Core Executive
         "President",
-        "Vice President",
+        "Vice-President",
         "General Secretary",
         "Joint Secretary",
+        "Organizing Secretary",
+        "Joint Organizing Secretary",
+
+        // Advisory Committee
+        "Chief Advisor",
+        "Honorary Advisors",
+        "Advisors",
+
+        // Financial Roles
         "Treasurer",
-        "Member",
-        "Advisor",
+        "Deputy Treasurer",
+        "Treasure Secretary", // Kept for specificity if needed
+
+        // Secretariat / Office Roles
+        "Secretary",
+        "Office Secretary",
+        "Joint Office Secretary",
+
+        // Specialized Roles (R&IC & FECDF)
+        "Science, Technology & Research Affairs Secretary",
+        "Joint Science, Technology & Research Affairs Secretary",
+        "Press & Publicity Affairs Secretary",
+        "Joint Press & Publicity Affairs Secretary",
+        "Press & Publication Secretary",
+        "Debate & Workshop Secretary",
+        "Information & Research",
+
+        // General / Catch-all (from your last input)
         "Coordinator",
+        "Member",
         "Other",
       ],
       default: "Member",

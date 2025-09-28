@@ -33,7 +33,7 @@ export const addCommittee = async (req, res) => {
       clubId,
       name,
       role: role || "Member",
-      image,
+      image: typeof image === "string" ? image : "",
       email,
       phone,
       facebookLink,
@@ -70,7 +70,7 @@ export const getFullCommitteeClub = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in getFullCommitteeClub:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: error.message });
   }
 };
 export const deleteCommitteeMember = async (req, res) => {

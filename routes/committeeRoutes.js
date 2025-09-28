@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.post("/committee/:id", addCommittee);
+router.post("/:id/add-club-committee-member", addCommittee);
 router.get("/getfullclubcommittee/:id", getFullCommitteeClub);
 router.delete("/committee/:clubId/delete/:memberId", deleteCommitteeMember);
 router.put("/committee/:clubId/update/:memberId", updateCommitteeMember);
