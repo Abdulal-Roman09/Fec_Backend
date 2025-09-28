@@ -6,16 +6,16 @@ export const addCommittee = async (req, res) => {
     const { name, role, image, email, phone, facebookLink } = req.body;
 
     // Validation
-    if (!clubId || !name) {
+    if (!clubId || !email) {
       return res.status(400).json({ message: "clubId and name are required" });
     }
 
     // Check if member already exists in this club by name
-    const userExist = await Committee.findOne({ clubId, name });
+    const userExist = await Committee.findOne({ clubId, email });
     if (userExist) {
-      return res
-        .status(400)
-        .json({ message: "This member already exists in this club by name " });
+      return res.status(400).json({
+        message: "This member already exists in this club by emails ",
+      });
     }
     // Check if member already exists in this club by facebook
     const userExistbyFacebook = await Committee.findOne({
