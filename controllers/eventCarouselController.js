@@ -2,7 +2,6 @@ import EventCarousel from "../models/EventCarousel.js";
 
 export const addEventCarousel = async (req, res) => {
   try {
-    
     const event = req.body;
 
     const requiredFields = [
@@ -22,7 +21,20 @@ export const addEventCarousel = async (req, res) => {
     if (missing)
       return res.status(400).json({ message: `${missing} is required.` });
 
+    // 🔍 Duplicate check
+    const existingEvent = await EventCarousel.findOne({
+      clubName: event.clubName,
+      eventTitle: event.eventTitle,
+    });
+
+    if (existingEvent) {
+      return res.status(400).json({
+        message: "This event already exists for this club.",
+      });
+    }
+
     const newEvent = await EventCarousel.create(event);
+
     res
       .status(201)
       .json({ message: "Event added successfully", event: newEvent });
@@ -30,6 +42,7 @@ export const addEventCarousel = async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
+
 export const deletedEventCarousel = async (req, res) => {
   try {
     const { id } = req.params;
