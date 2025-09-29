@@ -21,7 +21,6 @@ export const addEventCarousel = async (req, res) => {
     if (missing)
       return res.status(400).json({ message: `${missing} is required.` });
 
-    // 🔍 Duplicate check
     const existingEvent = await EventCarousel.findOne({
       clubName: event.clubName,
       eventTitle: event.eventTitle,
@@ -38,6 +37,18 @@ export const addEventCarousel = async (req, res) => {
     res
       .status(201)
       .json({ message: "Event added successfully", event: newEvent });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+export const getAllEventCarousle = async (req, res) => {
+  try {
+    const events = await EventCarousel.find().sort({ date: -1 });
+
+    res.status(200).json({
+      message: "All events retrieved successfully",
+      events,
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
