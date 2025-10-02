@@ -54,6 +54,7 @@ export const getAllEventCarousle = async (req, res) => {
   }
 };
 
+
 export const deletedEventCarousel = async (req, res) => {
   try {
     const { id } = req.params;
