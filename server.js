@@ -10,6 +10,7 @@ import eventRoutes from "./routes/eventRoutes.js";
 import committeeRoutes from "./routes/committeeRoutes.js";
 import achievmentController from "./routes/achievementRoutes.js";
 import eventCarouselRoutes from "./routes/eventCarouselRoutes.js";
+import testimonialRoutes from "./routes/testimonialRoutes.js";
 
 dotenv.config();
 
@@ -44,8 +45,9 @@ app.use("/api/v1", clubRoutes);
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", eventRoutes);
 app.use("/api/v1", committeeRoutes);
-app.use("/api/v1", achievmentController);
 app.use("/api/v1", eventCarouselRoutes);
+app.use("/api/v1", achievmentController);
+app.use("/api/v1", testimonialRoutes);
 
 
 // Simple test route
