@@ -1,4 +1,7 @@
 import Club from "../models/Club.js";
+import Event from "../models/Event.js";
+import Achivement from "../models/Achivement.js";
+import Committee from "../models/Committee.js";
 
 export const createClub = async (req, res) => {
   try {
@@ -34,24 +37,44 @@ export const getSingleClubs = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
 export const deleteClub = async (req, res) => {
   try {
     const { id } = req.params;
-    if (!id) return res.status({ message: "id is not found" });
 
+    // Check id
+    if (!id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Club ID not found" });
+    }
+
+    // First delete club
     const club = await Club.findByIdAndDelete(id);
+
     if (!club) {
       return res.status(404).json({
         success: false,
         message: "Club not found",
       });
     }
+
+    // Delete all related data
+    await Promise.all([
+      Event.deleteMany({ clubId: id }),
+      Achivement.deleteMany({ clubId: id }),
+      Committee.deleteMany({ clubId: id }),
+    ]);
+
     return res.status(200).json({
       success: true,
-      message: "club is delete",
+      message: "Club and all related data deleted successfully",
       data: club,
     });
   } catch (error) {
-    return res.status(500).json({ message: "server Error:" + error.message });
+    return res.status(500).json({
+      success: false,
+      message: "Server Error: " + error.message,
+    });
   }
 };
