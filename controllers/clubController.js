@@ -16,7 +16,16 @@ export const createClub = async (req, res) => {
 
 export const getAllclubs = async (req, res) => {
   try {
-    const clubs = await Club.find().sort({ createdAt: -1 });
+    const { search } = req.query;
+    const query = {};
+    if (search) {
+      query.$or = [
+        { clubName: { $regex: search, $options: "i" } },
+        { clubSortName: { $regex: search, $options: "i" } },
+        { clubCategory: { $regex: search, $options: "i" } },
+      ];
+    }
+    const clubs = await Club.find(query).sort({ createdAt: -1 });
     res.status(200).json({ message: "Clubs fetched successfully", clubs });
   } catch (error) {
     return res.status(500).json({ message: error.message });

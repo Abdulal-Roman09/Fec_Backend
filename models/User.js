@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
+    password: { type: String },
     profileImage: { type: String, default: "/default-avatar.png" },
     role: {
       type: String,
@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema(
     facebook: { type: String },
     phone: { type: String },
   },
-  { timestamps: true } 
+  { timestamps: true }
 );
 
 export default mongoose.model("User", UserSchema);

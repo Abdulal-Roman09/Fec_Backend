@@ -1,55 +1,50 @@
 import User from "../models/User.js";
 
-// CREATE USER
 export const createUser = async (req, res) => {
   try {
-    const {
-      name,
-      email,
-      password,
-      profileImage,
-      role,
-      year,
-      semester,
-      registerNumber,
-      hallName,
-      phone,
-      linkedin,
-      github,
-      facebook,
-      session,
-      homeTown,
-    } = req.body;
+    const { name, email, profileImage, password, ...rest } = req.body;
 
-    // Check existing user
-    const existUser = await User.findOne({ email });
-    if (existUser) {
-      return res.status(400).json({ message: "Email already exists" });
+    if (!name || !email) {
+      return res.status(400).json({ message: "Name and email required" });
     }
 
-    const newUser = new User({
-      name,
-      email,
-      password,
-      profileImage: profileImage || "/default-avatar.png",
-      role: role || "Student",
-      year,
-      semester,
-      registerNumber,
-      hallName,
-      phone,
-      linkedin,
-      github,
-      facebook,
-      session,
-      homeTown,
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(200).json({ message: "User already exists", user });
+    }
+
+    const allowedFields = [
+      "session",
+      "year",
+      "registerNumber",
+      "semester",
+      "homeTown",
+      "hallName",
+      "linkedin",
+      "github",
+      "facebook",
+      "phone",
+    ];
+
+    const filteredRest = {};
+    allowedFields.forEach((f) => {
+      if (rest[f]) filteredRest[f] = rest[f];
     });
 
-    await newUser.save();
+    user = new User({
+      name,
+      email,
+      profileImage: profileImage || "/default-avatar.png",
+      password: password || undefined,
+      ...filteredRest,
+      role: "Student",
+    });
 
-    res.status(201).json({ message: "User created", user: newUser });
+    await user.save();
+    res.status(201).json({ message: "User created", user });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    console.error("Backend error:", error);
+    res.status(500).json({ message: error.message });
   }
 };
 
