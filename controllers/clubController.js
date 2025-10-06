@@ -110,3 +110,73 @@ export const deleteClub = async (req, res) => {
     });
   }
 };
+
+export const getFilterClubs = async (req, res) => {
+  try {
+    // Extract query params (with defaults)
+    const {
+      category,
+      search = "", // default: empty string
+      sortBy = "createdAt",
+      order = "desc",
+      page = 1,
+      limit = 10,
+    } = req.query;
+
+    // 1️⃣ Filter setup
+    const filter = {};
+
+    // Category filter (optional)
+    if (category) {
+      filter.clubCategory = category;
+    }
+
+    // Search filter (only if search has value)
+    const trimmedSearch = search.trim();
+    if (trimmedSearch) {
+      filter.$or = [
+        { clubName: { $regex: trimmedSearch, $options: "i" } },
+        { clubDescription: { $regex: trimmedSearch, $options: "i" } },
+      ];
+    }
+
+    // 2️⃣ Sorting setup
+    let sortCondition = {};
+    if (sortBy === "createdAt") {
+      sortCondition = { createdAt: order === "asc" ? 1 : -1 };
+    } else if (sortBy === "name") {
+      sortCondition = { clubName: order === "desc" ? -1 : 1 };
+    } else {
+      // default sort: latest first + A–Z
+      sortCondition = { createdAt: -1, clubName: 1 };
+    }
+
+    // 3️⃣ Pagination setup
+    const pageNumber = parseInt(page, 10);
+    const pageSize = parseInt(limit, 10);
+    const skip = (pageNumber - 1) * pageSize;
+
+    // 4️⃣ Execute queries (optimized)
+    const [clubs, total] = await Promise.all([
+      Club.find(filter).sort(sortCondition).skip(skip).limit(pageSize),
+      Club.countDocuments(filter),
+    ]);
+
+    // 5️⃣ Send response
+    res.status(200).json({
+      success: true,
+      total,
+      count: clubs.length,
+      currentPage: pageNumber,
+      totalPages: Math.ceil(total / pageSize),
+      data: clubs,
+    });
+  } catch (error) {
+    console.error("Error fetching clubs:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch clubs.",
+      error: error.message,
+    });
+  }
+};
