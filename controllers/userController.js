@@ -59,10 +59,11 @@ export const getAllUser = async (req, res) => {
 };
 // GET A SINGLE USER
 
-export const singelUser = async (req, res) => {
+export const singleUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id).lean();
+    const { email } = req.params;
+
+    const user = await User.findOne({ email }).lean();
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
