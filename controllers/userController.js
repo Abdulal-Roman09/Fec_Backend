@@ -2,7 +2,7 @@ import User from "../models/User.js";
 
 export const createUser = async (req, res) => {
   try {
-    const { name, email, profileImage, password, ...rest } = req.body;
+    const { name, email, profileImage, password } = req.body;
 
     if (!name || !email) {
       return res.status(400).json({ message: "Name and email required" });
@@ -10,34 +10,14 @@ export const createUser = async (req, res) => {
 
     let user = await User.findOne({ email });
     if (user) {
-      return res.status(200).json({ message: "User already exists", user });
+      return res.status(409).json({ message: "User already exists", user });
     }
-
-    const allowedFields = [
-      "session",
-      "year",
-      "registerNumber",
-      "semester",
-      "homeTown",
-      "hallName",
-      "linkedin",
-      "github",
-      "facebook",
-      "phone",
-    ];
-
-    const filteredRest = {};
-    allowedFields.forEach((f) => {
-      if (rest[f]) filteredRest[f] = rest[f];
-    });
 
     user = new User({
       name,
       email,
       profileImage: profileImage || "/default-avatar.png",
       password: password || undefined,
-      ...filteredRest,
-      role: "Student",
     });
 
     await user.save();
