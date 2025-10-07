@@ -11,18 +11,19 @@ const UserSchema = new mongoose.Schema(
       enum: ["Student", "ClubMember", "CR", "Admin", "SuperAdmin"],
       default: "Student",
     },
-    session: { type: String },
-    year: { type: String },
-    registerNumber: { type: String },
-    semester: { type: String },
-    homeTown: { type: String },
-    hallName: { type: String },
-    linkedin: { type: String },
-    github: { type: String },
-    facebook: { type: String },
-    phone: { type: String },
+    // Optional fields, default empty string
+    session: { type: String, default: "" },
+    year: { type: String, default: "" },
+    registerNumber: { type: String, default: "" },
+    semester: { type: String, default: "" },
+    homeTown: { type: String, default: "" },
+    hallName: { type: String, default: "" },
+    linkedin: { type: String, default: "" },
+    github: { type: String, default: "" },
+    facebook: { type: String, default: "" },
+    phone: { type: String, default: "" },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 export default mongoose.model("User", UserSchema);
