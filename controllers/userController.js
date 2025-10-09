@@ -9,15 +9,16 @@ export const createUser = async (req, res) => {
     }
 
     let user = await User.findOne({ email });
-    if (user) {
-      return res.status(409).json({ message: "User already exists", user });
-    }
+    // if (user) {
+    //   return res.status(409).json({ message: "User already exists", user });
+    // }
 
     user = new User({
       name,
       email,
       profileImage: profileImage || "/default-avatar.png",
       password: password || undefined,
+      lastLogin: new Date(),
     });
 
     await user.save();
