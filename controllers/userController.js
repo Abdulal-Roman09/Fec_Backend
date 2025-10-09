@@ -16,7 +16,7 @@ export const createUser = async (req, res) => {
     user = new User({
       name,
       email,
-      profileImage: profileImage || "/default-avatar.png",
+      profileImage: profileImage || "https://i.ibb.co.com/pv7TymVd/User-Avatar-Profile-Clip-Art-Transparent-File.png",
       password: password || undefined,
       lastLogin: new Date(),
     });
