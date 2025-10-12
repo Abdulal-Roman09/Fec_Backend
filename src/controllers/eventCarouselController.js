@@ -1,4 +1,4 @@
-import EventCarousel from "../src/models/EventCarousel.js";
+import EventCarousel from "../models/EventCarousel.js";
 
 export const addEventCarousel = async (req, res) => {
   try {
