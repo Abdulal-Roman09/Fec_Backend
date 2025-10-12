@@ -25,7 +25,7 @@ const CommitteeSchema = new mongoose.Schema(
         // Financial Roles
         "Treasurer",
         "Deputy Treasurer",
-        "Treasure Secretary", // Kept for specificity if needed
+        "Treasure Secretary",
 
         // Secretariat / Office Roles
         "Secretary",

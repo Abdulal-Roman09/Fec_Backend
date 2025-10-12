@@ -1,7 +1,7 @@
+// app.js
 import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
 import cors from "cors";
+import dotenv from "dotenv";
 
 // import routes
 import clubRoutes from "./routes/clubRoutes.js";
@@ -19,12 +19,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-// MongoDB connection
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
-
+// CORS setup
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -40,7 +35,7 @@ app.use(
   })
 );
 
-// all routes
+// Routes
 app.use("/api/v1", clubRoutes);
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", eventRoutes);
@@ -49,14 +44,9 @@ app.use("/api/v1", eventCarouselRoutes);
 app.use("/api/v1", achievmentController);
 app.use("/api/v1", testimonialRoutes);
 
-
-// Simple test route
+// Test route
 app.get("/", (req, res) => {
   res.send("Server is running!");
 });
 
-// Start server
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+export default app;
