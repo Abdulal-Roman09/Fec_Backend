@@ -1,7 +1,7 @@
-# 🏡 FEC Backend - A club Magement system
+# 🏡 FEC Backend - Club Management System
 
-FEC Backend is a backend service for a modern **club management application**, built with **Node.js**, **Express.js**, and **MongoDB (Mongoose)**.  
-It powers the core functionalities of the FEC Backend platform such as property management, user authentication, and API endpoints for the frontend.
+**FEC Backend** is a backend service for a modern **club management system** of **Faridpur Engineering College**, built with **Node.js**, **Express.js**, and **MongoDB (Mongoose)**.  
+It powers the core functionalities of the platform such as user authentication, club management, and API endpoints for the frontend.
 
 ---
 
@@ -23,6 +23,7 @@ FEC Backend-server/
 ├── package.json        # Dependencies and scripts
 ├── vercel.json         # Vercel deployment config
 └── README.md           # Project documentation
+
 ```
 
 ---
@@ -94,7 +95,6 @@ Server will start at:
 - **bcryptjs** – Password hashing
 - **cors** – Cross-origin resource sharing
 - **dotenv** – Environment variables
-- **helmet** – Security headers
 
 ---
 
@@ -135,13 +135,14 @@ Server will start at:
 
 ---
 
-## 👨‍💻 Development Team - Alpha
+## 👨‍💻 Development Team - **clubHanger**
 
 | Role           | Name / GitHub Profile                                |
 | -------------- | ---------------------------------------------------- |
 | 👨‍💻 Core Member | [Abdul Al Roman](https://github.com/Abdulal-Roman09) |
 
 ---
+
 
 ## 🌿 Team Workflow & Branching Strategy
 
@@ -247,6 +248,7 @@ We welcome contributions! Please:
 
 ---
 
-💡 **FEC Backend** — Building the future of real estate technology, one line of code at a time.
+💡 **FEC Backend** — Building the future of college club management, one line of code at a time.
 
 ---
+
