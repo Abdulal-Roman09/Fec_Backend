@@ -22,7 +22,7 @@ app.use(express.json());
 // CORS setup
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://fec-club-hub-client-qya2.vercel.app"],
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     allowedHeaders: [
       "Content-Type",
