@@ -76,22 +76,25 @@ export const updateUserData = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
 export const getRoleByEmail = async (req, res) => {
   try {
     const { email } = req.params;
-
-    const user = await User.findOne({ email }).select("_id name email role");
+    const user = await User.findOne({ email }).select("_id role name email");
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+
     res.status(200).json({
-      id: user._id,
-      name: user.name,
       email: user.email,
+      name: user.name,
       role: user.role,
+      userId: user._id,
     });
   } catch (error) {
+    console.error("Error fetching user by email:", error);
     return res.status(500).json({ message: error.message });
   }
 };
+
