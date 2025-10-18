@@ -25,3 +25,22 @@ export const addTestimonial = async (req, res) => {
     });
   }
 };
+export const getAllTestimonial = async (req, res) => {
+  try {
+    const testimonial = await Testimonial.find()
+      .sort({ createdAt: -1 })
+      .populate("userId")
+      .populate("clubId");
+
+    return res.status(200).json({
+      success: true,
+      message: "Testimonials retrieved successfully",
+      data: testimonial,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server Error: " + error.message,
+    });
+  }
+};
