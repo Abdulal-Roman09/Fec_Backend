@@ -16,7 +16,9 @@ export const createUser = async (req, res) => {
     user = new User({
       name,
       email,
-      profileImage: profileImage || "https://i.ibb.co.com/pv7TymVd/User-Avatar-Profile-Clip-Art-Transparent-File.png",
+      profileImage:
+        profileImage ||
+        "https://i.ibb.co.com/pv7TymVd/User-Avatar-Profile-Clip-Art-Transparent-File.png",
       password: password || undefined,
       lastLogin: new Date(),
     });
@@ -74,19 +76,21 @@ export const updateUserData = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
 export const getRoleByEmail = async (req, res) => {
   try {
     const { email } = req.params;
-    const user = await User.findOne({ email }).select("role name email");
+
+    const user = await User.findOne({ email }).select("_id name email role");
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    res
-      .status(200)
-      .json({ email: user.email, name: user.name, role: user.role });
+    res.status(200).json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
