@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+// ----------------------------
+// Address Schema
+// ----------------------------
 export const AddressSchema = z.object({
   district: z.string().optional().default(""),
   zela: z.string().optional().default(""),
@@ -7,18 +10,23 @@ export const AddressSchema = z.object({
   roadname: z.string().optional().default(""),
 });
 
+// ----------------------------
+// Emergency Contact Schema
+// ----------------------------
 export const EmergencyContactSchema = z.object({
   name: z.string().optional().default(""),
   relationship: z.string().optional().default(""),
   phone: z.string().optional().default(""),
 });
 
-// Main User Validation Schema
+// ----------------------------
+// User Create Schema
+// ----------------------------
 export const UserCreateSchema = z.object({
-  // ----------------------------
-  // Basic Information
-  // ----------------------------
-  name: z.string({ required_error: "Name is required" }).min(2),
+  // Basic Info
+  name: z
+    .string({ required_error: "Name is required" })
+    .min(2, "Name too short"),
   email: z
     .string({ required_error: "Email is required" })
     .email("Invalid email format"),
@@ -28,25 +36,19 @@ export const UserCreateSchema = z.object({
     .enum(["Student", "ClubMember", "CR", "Admin", "SuperAdmin"])
     .default("Student"),
 
-  // ----------------------------
   // Activity & Status
-  // ----------------------------
-  lastLogin: z.date().optional(),
+  lastLogin: z.coerce.date().optional(), // auto convert string → Date
   isActive: z.boolean().optional().default(true),
   status: z.enum(["active", "suspended", "deleted"]).default("active"),
 
-  // ----------------------------
-  // Personal Information
-  // ----------------------------
+  // Personal Info
   gender: z.enum(["male", "female"]).optional(),
   bio: z.string().optional().default(""),
-  dateOfBirth: z.string().optional(),
+  dateOfBirth: z.string().optional().default(""),
   phone: z.string().optional().default(""),
   languages: z.array(z.string()).optional().default([]),
 
-  // ----------------------------
-  // Academic Information
-  // ----------------------------
+  // Academic Info
   session: z.string().optional().default(""),
   year: z.string().optional().default(""),
   department: z.string().optional().default(""),
@@ -55,31 +57,21 @@ export const UserCreateSchema = z.object({
   campusJoinDate: z.string().optional().default(""),
   hallName: z.string().optional().default(""),
 
-  // ----------------------------
   // Address
-  // ----------------------------
   address: AddressSchema.optional(),
 
-  // ----------------------------
   // Clubs & Achievements
-  // ----------------------------
   clubs: z.array(z.string()).optional().default([]),
   achievements: z.array(z.string()).optional().default([]),
 
-  // ----------------------------
   // Social
-  // ----------------------------
   facebook: z.string().optional().default(""),
 
-  // ----------------------------
   // Emergency Contact
-  // ----------------------------
   emergencyContact: EmergencyContactSchema.optional(),
 });
 
-// For updating an existing user (PATCH)
+// ----------------------------
+// User Update Schema (PATCH)
+// ----------------------------
 export const UserUpdateSchema = UserCreateSchema.partial();
-
-// Type inference (for TypeScript)
-export type UserCreateDTO = z.infer<typeof UserCreateSchema>;
-export type UserUpdateDTO = z.infer<typeof UserUpdateSchema>;

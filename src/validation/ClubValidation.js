@@ -41,9 +41,3 @@ export const ClubCreateSchema = z.object({
 // Update Club Schema
 // ----------------------
 export const ClubUpdateSchema = ClubCreateSchema.partial();
-
-// ----------------------
-// Type Inference (for TypeScript)
-// ----------------------
-export type ClubCreateDTO = z.infer<typeof ClubCreateSchema>;
-export type ClubUpdateDTO = z.infer<typeof ClubUpdateSchema>;
