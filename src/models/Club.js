@@ -8,6 +8,7 @@ const ClubSchema = new mongoose.Schema(
     clubBanner: { type: String },
     clubMotto: { type: String },
     clubDescription: { type: String },
+    clubCreatingYear: { type: String },
     clubCategory: {
       type: String,
       required: true,
