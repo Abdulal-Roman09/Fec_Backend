@@ -13,6 +13,23 @@ export const createClub = async (req, res) => {
     });
   }
 };
+export const getallclub = async (req, res) => {
+  try {
+    const result = await Club.find();
+
+    res.status(200).json({
+      success: true,
+      message: "Clubs fetched successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch clubs",
+      error: error.message,
+    });
+  }
+};
 
 export const getAllclubs = async (req, res) => {
   try {
